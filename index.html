@@ -92,7 +92,7 @@
                 span.className='word';
                 span.textContent=w;
                 container.appendChild(span);
-                requestAnimationFrame(()=>{requestAnimationFrame(()=>span.classList.add('show'))});
+                requestAnimationFrame(()=>{ requestAnimationFrame(()=>span.classList.add('show')) });
                 i++;setTimeout(showNext,rand(minDelay,maxDelay));
             }
         }
@@ -101,12 +101,12 @@
 
     document.getElementById('pressBtn').addEventListener('click',()=>{
         spawnHearts(20);
+        const audio=document.getElementById('music');
+        if(audio){ audio.currentTime=0; audio.play().catch(()=>{console.log("Audio failed to play.")}); }
         setTimeout(()=>{
             document.getElementById('page1').style.display='none';
             document.getElementById('page2').style.display='block';
             typeMessage(150,400);
-            const audio=document.getElementById('music');
-            if(audio) audio.play().catch(()=>{});
         },5200);
     });
 </script>
