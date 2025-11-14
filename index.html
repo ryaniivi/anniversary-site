@@ -6,7 +6,7 @@
     <title>For You</title>
     <style>
         :root{--bg:#0f0f10;--accent:#e63946}
-        body{margin:0;background:var(--bg);color:#fff;font-family:Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;}
+        body{margin:0;background:var(--bg);color:#fff;font-family:Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;overflow-x:hidden}
         .center{min-height:100vh;display:flex;align-items:center;justify-content:center;flex-direction:column;padding:32px;text-align:center}
         h1{font-size:2.5rem;margin:0 0 12px;opacity:0;animation:fadeIn 1.2s forwards}
         @keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
@@ -45,63 +45,60 @@
 </div>
 
 <script>
-    function rand(min, max){return Math.random()*(max-min)+min}
+    function rand(min,max){return Math.random()*(max-min)+min}
 
     function spawnHearts(count){
         for(let i=0;i<count;i++){
-            const s = document.createElement('div');
-            s.className = 'float-heart';
-            s.textContent = '❤';
-            const startLeft = rand(5,95);
-            s.style.left = startLeft + 'vw';
-            s.style.bottom = '-10vh';
-            const size = Math.floor(rand(24,52));
-            s.style.fontSize = size + 'px';
-            const dur = rand(4.5,6.5);
-            const delay = rand(0,0.9);
-            s.animate([
-                { transform: `translateX(0) translateY(0) scale(0.8) rotate(${rand(-20,20)}deg)` },
-                { transform: `translateX(${rand(-80,80)}px) translateY(-200px) scale(1) rotate(${rand(-10,30)}deg)` },
-                { transform: `translateX(${rand(-120,120)}px) translateY(-700px) scale(1.05) rotate(${rand(30,60)}deg)` }
-            ],{duration: (dur+delay)*1000, easing: 'linear', fill:'forwards'});
-            document.body.appendChild(s);
-            setTimeout(()=>{ s.remove(); }, (dur+delay)*1000 + 400);
+            const h = document.createElement('div');
+            h.className='float-heart';
+            h.textContent='❤';
+            h.style.left=rand(5,95)+'vw';
+            h.style.bottom='-10vh';
+            h.style.fontSize=Math.floor(rand(24,52))+'px';
+            const dur=rand(4.5,6.5);
+            const delay=rand(0,0.9);
+            h.animate([
+                { transform:`translateX(0) translateY(0) scale(0.8) rotate(${rand(-20,20)}deg)`},
+                { transform:`translateX(${rand(-80,80)}px) translateY(-200px) scale(1) rotate(${rand(-10,30)}deg)`},
+                { transform:`translateX(${rand(-120,120)}px) translateY(-700px) scale(1.05) rotate(${rand(30,60)}deg)`}
+            ],{duration:(dur+delay)*1000,easing:'linear',fill:'forwards'});
+            document.body.appendChild(h);
+            setTimeout(()=>h.remove(),(dur+delay)*1000+400);
         }
     }
 
-    const message = `My princess, I can’t believe it’s been a whole year with you, a year of learning your heart, a year of falling deeper into you, a year of realising again and again that you’re the person I want to wake up to, lean on, laugh with, and love in all the quiet and loud ways life gives us. And yeah, I know we argue sometimes, we misunderstand each other, we get emotional, we get stubborn — but even those moments matter to me, because they remind me how much I want this, how much I want us.\n\nSometimes I think about the moments I didn’t handle well, the times I could’ve been softer, more patient, more present, and it honestly gets to me because the last thing I ever want is to be the reason your heart feels heavy. I promise you I’m trying to grow, to be better for you, to show up in the ways you deserve — not out of pressure, but because losing even a piece of you is something I could never bear.\n\nWhen I look back on everything we’ve shared — the soft moments, the messy ones, the late-night conversations, the tiny jokes only we understand — I feel this warmth in my chest that I can’t fully put into words. You’ve changed me, gently and beautifully, without asking me to be anything but myself. You’ve shown me what comfort feels like, what loyalty looks like, what love becomes when it’s patient, honest, and real.\n\nEven on the days that weren’t perfect, you stayed, you listened, you felt with me, and you made me feel chosen in a world that rushes past everything. I hope you know how deeply I appreciate you — your kindness, your honesty, your softness, the way you care so fiercely yet so gently.\n\nBeing with you this past year has made my world fuller, calmer, sweeter, and more certain. You’re my favourite part of every single day, and I love you more than I can ever explain. I only want you — in every version of this life, it’s still you.\n\nThank you for loving me the way you do, for giving me a year I’ll carry with me forever, and for being the person who makes my heart feel like home. Here’s to us, to everything we’ve built, and to everything still ahead.`;
+    const message=`My princess, I can’t believe it’s been a whole year with you, a year of learning your heart, a year of falling deeper into you, a year of realising again and again that you’re the person I want to wake up to, lean on, laugh with, and love in all the quiet and loud ways life gives us. And yeah, I know we argue sometimes, we misunderstand each other, we get emotional, we get stubborn — but even those moments matter to me, because they remind me how much I want this, how much I want us.\n\nSometimes I think about the moments I didn’t handle well, the times I could’ve been softer, more patient, more present, and it honestly gets to me because the last thing I ever want is to be the reason your heart feels heavy. I promise you I’m trying to grow, to be better for you, to show up in the ways you deserve — not out of pressure, but because losing even a piece of you is something I could never bear.\n\nWhen I look back on everything we’ve shared — the soft moments, the messy ones, the late-night conversations, the tiny jokes only we understand — I feel this warmth in my chest that I can’t fully put into words. You’ve changed me, gently and beautifully, without asking me to be anything but myself. You’ve shown me what comfort feels like, what loyalty looks like, what love becomes when it’s patient, honest, and real.\n\nEven on the days that weren’t perfect, you stayed, you listened, you felt with me, and you made me feel chosen in a world that rushes past everything. I hope you know how deeply I appreciate you — your kindness, your honesty, your softness, the way you care so fiercely yet so gently.\n\nBeing with you this past year has made my world fuller, calmer, sweeter, and more certain. You’re my favourite part of every single day, and I love you more than I can ever explain. I only want you — in every version of this life, it’s still you.\n\nThank you for loving me the way you do, for giving me a year I’ll carry with me forever, and for being the person who makes my heart feel like home. Here’s to us, to everything we’ve built, and to everything still ahead.`;
 
-    function typeMessage(minDelay=150, maxDelay=400){
-        const container = document.getElementById('typedText');
-        container.innerHTML = '';
-        const words = message.split(/(\s+)/);
+    function typeMessage(minDelay=150,maxDelay=400){
+        const container=document.getElementById('typedText');
+        container.innerHTML='';
+        const words=message.split(/(\s+)/);
         let i=0;
         function showNext(){
-            if(i >= words.length) return;
-            const w = words[i];
-            if(/\s+/.test(w)){ container.appendChild(document.createTextNode(w)); i++; showNext(); }
-            else {
-                const span = document.createElement('span');
-                span.className = 'word';
-                span.textContent = w;
+            if(i>=words.length)return;
+            const w=words[i];
+            if(/\s+/.test(w)){container.appendChild(document.createTextNode(w));i++;showNext();}
+            else{
+                const span=document.createElement('span');
+                span.className='word';
+                span.textContent=w;
                 container.appendChild(span);
-                requestAnimationFrame(()=>{ requestAnimationFrame(()=> span.classList.add('show')); });
-                i++;
-                setTimeout(showNext, rand(minDelay,maxDelay));
+                requestAnimationFrame(()=>{requestAnimationFrame(()=>span.classList.add('show'))});
+                i++;setTimeout(showNext,rand(minDelay,maxDelay));
             }
         }
         showNext();
     }
 
-    document.getElementById('pressBtn').addEventListener('click', ()=>{
+    document.getElementById('pressBtn').addEventListener('click',()=>{
         spawnHearts(20);
         setTimeout(()=>{
             document.getElementById('page1').style.display='none';
             document.getElementById('page2').style.display='block';
             typeMessage(150,400);
-            const audio = document.getElementById('music');
-            if(audio) audio.play().catch(()=>{});
-        }, 5200);
+            const audio=document.getElementById('music');
+            if(audio)audio.play().catch(()=>{});
+        },5200);
     });
 </script>
 
