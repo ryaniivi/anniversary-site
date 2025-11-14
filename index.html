@@ -20,8 +20,7 @@
         button{background:var(--accent);color:#fff;border:0;padding:12px 22px;border-radius:10px;font-size:1.05rem;cursor:pointer;box-shadow:0 6px 20px rgba(0,0,0,0.4)}
         button:active{transform:translateY(1px)}
 
-        .float-heart{position:fixed;font-size:36px;line-height:1;pointer-events:none;opacity:0;transform:translateY(0) scale(0.7) rotate(0deg);transition:opacity .3s ease;will-change:transform,opacity;text-shadow:0 6px 18px rgba(0,0,0,0.45);}
-        @keyframes floatUp{0%{opacity:0;transform:translateY(0) scale(0.6) rotate(-10deg)}10%{opacity:1}100%{opacity:0;transform:translateY(-700px) scale(1.05) rotate(30deg)}}
+        .float-heart{position:fixed;font-size:36px;line-height:1;pointer-events:none;text-shadow:0 6px 18px rgba(0,0,0,0.45);}
 
         #page2{display:none;padding:48px;max-width:900px;margin:0 auto;line-height:1.9;font-size:1.05rem}
         #typedText{white-space:pre-wrap;font-size:1.05rem}
@@ -52,18 +51,28 @@
             const h = document.createElement('div');
             h.className='float-heart';
             h.textContent='❤';
-            h.style.left=rand(5,95)+'vw';
-            h.style.bottom='-10vh';
-            h.style.fontSize=Math.floor(rand(24,52))+'px';
-            const dur=rand(4.5,6.5);
-            const delay=rand(0,0.9);
+            h.style.left = rand(5,95)+'vw';
+            h.style.bottom = '-10vh';
+            h.style.fontSize = Math.floor(rand(24,52))+'px';
+            h.style.opacity = '1';
+
+            const dur = rand(4.5,6.5);
+            const deltaX = rand(-120,120);
+            const deltaY = -700;
+            const rotate = rand(30,60);
+
             h.animate([
-                { transform:`translateX(0) translateY(0) scale(0.8) rotate(${rand(-20,20)}deg)`},
-                { transform:`translateX(${rand(-80,80)}px) translateY(-200px) scale(1) rotate(${rand(-10,30)}deg)`},
-                { transform:`translateX(${rand(-120,120)}px) translateY(-700px) scale(1.05) rotate(${rand(30,60)}deg)`}
-            ],{duration:(dur+delay)*1000,easing:'linear',fill:'forwards'});
+                { transform: `translateX(0px) translateY(0px) scale(0.8) rotate(0deg)` },
+                { transform: `translateX(${deltaX/2}px) translateY(${deltaY/3}px) scale(1) rotate(${rotate/2}deg)` },
+                { transform: `translateX(${deltaX}px) translateY(${deltaY}px) scale(1.05) rotate(${rotate}deg)` }
+            ], {
+                duration: dur*1000,
+                easing: 'ease-out',
+                fill: 'forwards'
+            });
+
             document.body.appendChild(h);
-            setTimeout(()=>h.remove(),(dur+delay)*1000+400);
+            setTimeout(()=>h.remove(), dur*1000 + 400);
         }
     }
 
@@ -75,8 +84,8 @@
         const words=message.split(/(\s+)/);
         let i=0;
         function showNext(){
-            if(i>=words.length)return;
-            const w=words[i];
+            if(i>=words.length) return;
+            const w = words[i];
             if(/\s+/.test(w)){container.appendChild(document.createTextNode(w));i++;showNext();}
             else{
                 const span=document.createElement('span');
@@ -97,7 +106,7 @@
             document.getElementById('page2').style.display='block';
             typeMessage(150,400);
             const audio=document.getElementById('music');
-            if(audio)audio.play().catch(()=>{});
+            if(audio) audio.play().catch(()=>{});
         },5200);
     });
 </script>
