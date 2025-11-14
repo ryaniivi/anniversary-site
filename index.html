@@ -11,16 +11,15 @@
             background: #111;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             color: white;
+            text-align: center;
+        }
+
+        .center {
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
-            text-align: center;
-        }
-
-        .container {
-            max-width: 600px;
-            padding: 20px;
+            flex-direction: column;
         }
 
         h1 {
@@ -28,6 +27,11 @@
             margin-bottom: 20px;
             animation: fadeIn 2s ease forwards;
             opacity: 0;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
 
         .heart {
@@ -50,25 +54,13 @@
             position: absolute;
         }
 
-        .heart::before {
-            top: -30px;
-            left: 0;
-        }
-
-        .heart::after {
-            left: 30px;
-            top: 0;
-        }
+        .heart::before { top: -30px; left: 0; }
+        .heart::after { left: 30px; top: 0; }
 
         @keyframes heartbeat {
             0% { transform: scale(1) rotate(-45deg); }
             50% { transform: scale(1.2) rotate(-45deg); }
             100% { transform: scale(1) rotate(-45deg); }
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
         }
 
         button {
@@ -83,32 +75,96 @@
             transition: 0.3s;
         }
 
-        button:hover {
-            background: #ff4d5a;
+        button:hover { background: #ff4d5a; }
+
+        /* Butterflies */
+        .butterfly {
+            position: fixed;
+            width: 40px;
+            height: 40px;
+            background-image: url('https://i.imgur.com/4NJlZyU.png');
+            background-size: contain;
+            opacity: 0;
+            animation: fly 5s linear forwards;
         }
 
-        #message {
-            margin-top: 30px;
-            font-size: 1.2rem;
-            opacity: 0;
-            transition: 1s ease;
+        @keyframes fly {
+            0% { transform: translateY(0) scale(0.5); opacity: 0; }
+            20% { opacity: 1; }
+            100% { transform: translateY(-800px) scale(1); opacity: 0; }
         }
+
+        /* Second Page */
+        #page2 {
+            display: none;
+            padding: 40px;
+            max-width: 800px;
+            margin: auto;
+            line-height: 1.8;
+            font-size: 1.2rem;
+        }
+
+        #typedText { white-space: pre-line; }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>For You, Love</h1>
-        <div class="heart"></div>
-        <button onclick="showMessage()">Press Me</button>
-        <div id="message"></div>
-    </div>
 
-    <script>
-        function showMessage() {
-            const msg = document.getElementById("message");
-            msg.style.opacity = 1;
-            msg.innerHTML = "This past year with you has been the most beautiful chapter of my life. Even from a distance, you’ve never felt far. Happy 1 year, my love.";
+<div id="page1" class="center">
+    <h1>For you, my love</h1>
+    <div class="heart"></div>
+    <button onclick="startButterflies()">Press Me</button>
+</div>
+
+<div id="page2">
+    <audio id="music" src="apocalypse.mp3"></audio>
+    <p id="typedText"></p>
+</div>
+
+<script>
+    function startButterflies() {
+        for (let i = 0; i < 20; i++) {
+            const b = document.createElement('div');
+            b.classList.add('butterfly');
+            b.style.left = Math.random() * window.innerWidth + 'px';
+            b.style.top = (window.innerHeight - 50) + 'px';
+            document.body.appendChild(b);
+            setTimeout(() => b.remove(), 5000);
         }
-    </script>
+        setTimeout(showPage2, 5500);
+    }
+
+    function showPage2() {
+        document.getElementById('page1').style.display = 'none';
+        document.getElementById('page2').style.display = 'block';
+        typeMessage();
+        document.getElementById('music').play();
+    }
+
+    const message = `My princess, I can’t believe it’s been a whole year with you, a year of learning your heart, a year of falling deeper into you, a year of realising again and again that you’re the person I want to wake up to, lean on, laugh with, and love in all the quiet and loud ways life gives us. And yeah, I know we argue sometimes, we misunderstand each other, we get emotional, we get stubborn — but even those moments matter to me, because they remind me how much I want this, how much I want us.
+
+Sometimes I think about the moments I didn’t handle well, the times I could’ve been softer, more patient, more present, and it honestly gets to me because the last thing I ever want is to be the reason your heart feels heavy. I promise you I’m trying to grow, to be better for you, to show up in the ways you deserve — not out of pressure, but because losing even a piece of you is something I could never bear.
+
+When I look back on everything we’ve shared — the soft moments, the messy ones, the late-night conversations, the tiny jokes only we understand — I feel this warmth in my chest that I can’t fully put into words. You’ve changed me, gently and beautifully, without asking me to be anything but myself. You’ve shown me what comfort feels like, what loyalty looks like, what love becomes when it’s patient, honest, and real.
+
+Even on the days that weren’t perfect, you stayed, you listened, you felt with me, and you made me feel chosen in a world that rushes past everything. I hope you know how deeply I appreciate you — your kindness, your honesty, your softness, the way you care so fiercely yet so gently.
+
+Being with you this past year has made my world fuller, calmer, sweeter, and more certain. You’re my favourite part of every single day, and I love you more than I can ever explain. I only want you — in every version of this life, it’s still you.
+
+Thank you for loving me the way you do, for giving me a year I’ll carry with me forever, and for being the person who makes my heart feel like home. Here’s to us, to everything we’ve built, and to everything still ahead.`;
+
+    let index = 0;
+    function typeMessage() {
+        const textContainer = document.getElementById('typedText');
+        const words = message.split(' ');
+        function showWord() {
+            if (index < words.length) {
+                textContainer.innerHTML += words[index] + ' ';
+                index++;
+                setTimeout(showWord, 1500);
+            }
+        }
+        showWord();
+    }
+</script>
 </body>
 </html>
