@@ -1,34 +1,34 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>For You</title>
-    <style>
-        :root{--bg:#0f0f10;--accent:#e63946}
-        body{margin:0;background:var(--bg);color:#fff;font-family:Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;overflow-x:hidden}
-        .center{min-height:100vh;display:flex;align-items:center;justify-content:center;flex-direction:column;padding:32px;text-align:center}
-        h1{font-size:2.5rem;margin:0 0 12px;opacity:0;animation:fadeIn 1.2s forwards}
-        @keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>For You</title>
+<style>
+:root{--bg:#0f0f10;--accent:#e63946}
+body{margin:0;background:var(--bg);color:#fff;font-family:Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;overflow-x:hidden}
+.center{min-height:100vh;display:flex;align-items:center;justify-content:center;flex-direction:column;padding:32px;text-align:center}
+h1{font-size:2.5rem;margin:0 0 12px;opacity:0;animation:fadeIn 1.2s forwards}
+@keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
 
-        .static-heart{width:64px;height:64px;position:relative;margin:16px auto;transform:rotate(-45deg)}
-        .static-heart:before,.static-heart:after{content:'';position:absolute;width:64px;height:64px;background:var(--accent);border-radius:50%}
-        .static-heart{background:var(--accent)}
-        .static-heart:before{top:-32px;left:0}
-        .static-heart:after{left:32px;top:0}
+.static-heart{width:64px;height:64px;position:relative;margin:16px auto;transform:rotate(-45deg)}
+.static-heart:before,.static-heart:after{content:'';position:absolute;width:64px;height:64px;background:var(--accent);border-radius:50%}
+.static-heart{background:var(--accent)}
+.static-heart:before{top:-32px;left:0}
+.static-heart:after{left:32px;top:0}
 
-        button{background:var(--accent);color:#fff;border:0;padding:12px 22px;border-radius:10px;font-size:1.05rem;cursor:pointer;box-shadow:0 6px 20px rgba(0,0,0,0.4)}
-        button:active{transform:translateY(1px)}
+button{background:var(--accent);color:#fff;border:0;padding:12px 22px;border-radius:10px;font-size:1.05rem;cursor:pointer;box-shadow:0 6px 20px rgba(0,0,0,0.4)}
+button:active{transform:translateY(1px)}
 
-        .float-heart{position:fixed;font-size:36px;line-height:1;pointer-events:none;text-shadow:0 6px 18px rgba(0,0,0,0.45);}
+.float-heart{position:fixed;font-size:36px;line-height:1;pointer-events:none;text-shadow:0 6px 18px rgba(0,0,0,0.45);}
 
-        #page2{display:none;padding:48px;max-width:900px;margin:0 auto;line-height:1.9;font-size:1.05rem}
-        #typedText{white-space:pre-wrap;font-size:1.05rem}
-        .word{opacity:0;display:inline-block;transform:translateY(6px);transition:opacity .45s cubic-bezier(.2,.9,.2,1),transform .45s cubic-bezier(.2,.9,.2,1);}
-        .word.show{opacity:1;transform:none}
+#page2{display:none;padding:48px;max-width:900px;margin:0 auto;line-height:1.9;font-size:1.05rem}
+#typedText{white-space:pre-wrap;font-size:1.05rem}
+.word{opacity:0;display:inline-block;transform:translateY(6px);transition:opacity .45s cubic-bezier(.2,.9,.2,1),transform .45s cubic-bezier(.2,.9,.2,1);}
+.word.show{opacity:1;transform:none}
 
-        @media (max-width:520px){h1{font-size:1.8rem}.static-heart{width:48px;height:48px}.static-heart:before,.static-heart:after{width:48px;height:48px}} 
-    </style>
+@media (max-width:520px){h1{font-size:1.8rem}.static-heart{width:48px;height:48px}.static-heart:before,.static-heart:after{width:48px;height:48px}}
+</style>
 </head>
 <body>
 
@@ -44,75 +44,77 @@
 </div>
 
 <script>
-    function rand(min,max){return Math.random()*(max-min)+min}
+function rand(min,max){return Math.random()*(max-min)+min}
 
-    function spawnHearts(count){
-        for(let i=0;i<count;i++){
-            const h = document.createElement('div');
-            h.className='float-heart';
-            h.textContent='❤';
-            h.style.left = rand(5,95)+'vw';
-            h.style.bottom = '-10vh';
-            h.style.fontSize = Math.floor(rand(24,52))+'px';
-            h.style.opacity = '1';
+function spawnHearts(count){
+    for(let i=0;i<count;i++){
+        const h = document.createElement('div');
+        h.className='float-heart';
+        h.textContent='❤';
+        h.style.left = rand(5,95)+'vw';
+        h.style.bottom = '-10vh';
+        h.style.fontSize = Math.floor(rand(24,52))+'px';
+        h.style.opacity = '1';
 
-            const dur = rand(4.5,6.5);
-            const deltaX = rand(-120,120);
-            const deltaY = -700;
-            const rotate = rand(30,60);
+        const dur = rand(4.5,6.5);
+        const deltaX = rand(-120,120);
+        const deltaY = -700;
+        const rotate = rand(30,60);
 
-            h.animate([
-                { transform: `translateX(0px) translateY(0px) scale(0.8) rotate(0deg)` },
-                { transform: `translateX(${deltaX/2}px) translateY(${deltaY/3}px) scale(1) rotate(${rotate/2}deg)` },
-                { transform: `translateX(${deltaX}px) translateY(${deltaY}px) scale(1.05) rotate(${rotate}deg)` }
-            ], {
-                duration: dur*1000,
-                easing: 'ease-out',
-                fill: 'forwards'
-            });
+        h.animate([
+            { transform: `translateX(0px) translateY(0px) scale(0.8) rotate(0deg)` },
+            { transform: `translateX(${deltaX/2}px) translateY(${deltaY/3}px) scale(1) rotate(${rotate/2}deg)` },
+            { transform: `translateX(${deltaX}px) translateY(${deltaY}px) scale(1.05) rotate(${rotate}deg)` }
+        ], {
+            duration: dur*1000,
+            easing: 'ease-out',
+            fill: 'forwards'
+        });
 
-            document.body.appendChild(h);
-            setTimeout(()=>h.remove(), dur*1000 + 400);
+        document.body.appendChild(h);
+        setTimeout(()=>h.remove(), dur*1000 + 400);
+    }
+}
+
+const message=`My princess, I can’t believe it’s been a whole year with you, a year of learning your heart, a year of falling deeper into you, a year of realising again and again that you’re the person I want to wake up to, lean on, laugh with, and love in all the quiet and loud ways life gives us. And yeah, I know we argue sometimes, we misunderstand each other, we get emotional, we get stubborn, but even those moments matter to me, because they remind me how much I want this, how much I want us.\n\nSometimes I think about the moments I didn’t handle well, the times I could’ve been softer, more patient, more present, and it honestly gets to me because the last thing I ever want is to be the reason your heart feels heavy. I promise you I’m trying to grow, to be better for you, to show up in the ways you deserve  not out of pressure, but because losing even a piece of you is something I could never bear.\n\nWhen I look back on everything we’ve shared the soft moments, the messy ones, the late night conversations, the tiny jokes only we understand, I feel this warmth in my chest that I can’t fully put into words. You’ve changed me, gently and beautifully, without asking me to be anything but myself. You’ve shown me what comfort feels like, what loyalty looks like, what love becomes when it’s patient, honest, and real.\n\nEven on the days that weren’t perfect, you stayed, you listened, you felt with me, and you made me feel chosen in a world that rushes past everything. I hope you know how deeply I appreciate you  your kindness, your honesty, your softness, the way you care so fiercely yet so gently.\n\nBeing with you this past year has made my world fuller, calmer, sweeter, and more certain. You’re my favourite part of every single day, and I love you more than I can ever explain. I only want you  in every version of this life, it’s still you.\n\nThank you for loving me the way you do, for giving me a year I’ll carry with me forever, and for being the person who makes my heart feel like home. Here’s to us, to everything we’ve built, and to everything still ahead.`;
+
+function typeMessage(minDelay=120,maxDelay=350){
+    const container=document.getElementById('typedText');
+    container.innerHTML='';
+    const words=message.split(/(\s+)/);
+    let i=0;
+    function showNext(){
+        if(i>=words.length) return;
+        const w = words[i];
+        if(/\s+/.test(w)){container.appendChild(document.createTextNode(w));i++;showNext();}
+        else{
+            const span=document.createElement('span');
+            span.className='word';
+            span.textContent=w;
+            container.appendChild(span);
+            requestAnimationFrame(()=>{ requestAnimationFrame(()=>span.classList.add('show'))});
+            i++;setTimeout(showNext,rand(minDelay,maxDelay));
         }
     }
+    showNext();
+}
 
-    const message=`My princess, I can’t believe it’s been a whole year with you, a year of learning your heart, a year of falling deeper into you, a year of realising again and again that you’re the person I want to wake up to, lean on, laugh with, and love in all the quiet and loud ways life gives us. And yeah, I know we argue sometimes, we misunderstand each other, we get emotional, we get stubborn, but even those moments matter to me, because they remind me how much I want this, how much I want us.\n\nSometimes I think about the moments I didn’t handle well, the times I could’ve been softer, more patient, more present, and it honestly gets to me because the last thing I ever want is to be the reason your heart feels heavy. I promise you I’m trying to grow, to be better for you, to show up in the ways you deserve  not out of pressure, but because losing even a piece of you is something I could never bear.\n\nWhen I look back on everything we’ve shared the soft moments, the messy ones, the late night conversations, the tiny jokes only we understand, I feel this warmth in my chest that I can’t fully put into words. You’ve changed me, gently and beautifully, without asking me to be anything but myself. You’ve shown me what comfort feels like, what loyalty looks like, what love becomes when it’s patient, honest, and real.\n\nEven on the days that weren’t perfect, you stayed, you listened, you felt with me, and you made me feel chosen in a world that rushes past everything. I hope you know how deeply I appreciate you  your kindness, your honesty, your softness, the way you care so fiercely yet so gently.\n\nBeing with you this past year has made my world fuller, calmer, sweeter, and more certain. You’re my favourite part of every single day, and I love you more than I can ever explain. I only want you  in every version of this life, it’s still you.\n\nThank you for loving me the way you do, for giving me a year I’ll carry with me forever, and for being the person who makes my heart feel like home. Here’s to us, to everything we’ve built, and to everything still ahead.`;
-
-    function typeMessage(minDelay=150,maxDelay=400){
-        const container=document.getElementById('typedText');
-        container.innerHTML='';
-        const words=message.split(/(\s+)/);
-        let i=0;
-        function showNext(){
-            if(i>=words.length) return;
-            const w = words[i];
-            if(/\s+/.test(w)){container.appendChild(document.createTextNode(w));i++;showNext();}
-            else{
-                const span=document.createElement('span');
-                span.className='word';
-                span.textContent=w;
-                container.appendChild(span);
-                requestAnimationFrame(()=>{requestAnimationFrame(()=>span.classList.add('show'))});
-                i++;setTimeout(showNext,rand(minDelay,maxDelay));
-            }
-        }
-        showNext();
+document.getElementById('pressBtn').addEventListener('click',()=>{
+    const audio=document.getElementById('music');
+    if(audio){
+        audio.currentTime=0;
+        audio.volume=0.8;
+        audio.play().catch(()=>{ console.log("Audio could not play. Make sure browser allows sound on click."); });
     }
 
-    document.getElementById('pressBtn').addEventListener('click',()=>{
-        spawnHearts(20);
-        const audio=document.getElementById('music');
-        if(audio){
-            audio.currentTime=0;
-            audio.volume=0.8;
-            audio.play().catch(()=>alert('Audio could not play. Make sure your browser allows sound on click.'));
-        }
-        setTimeout(()=>{
-            document.getElementById('page1').style.display='none';
-            document.getElementById('page2').style.display='block';
-            typeMessage(150,400);
-        },5200);
-    });
+    spawnHearts(20);
+
+    setTimeout(()=>{
+        document.getElementById('page1').style.display='none';
+        document.getElementById('page2').style.display='block';
+        typeMessage(120,350);
+    }, 500);
+});
 </script>
 
 </body>
