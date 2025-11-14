@@ -1,145 +1,104 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
     <title>For You</title>
     <style>
-        body {
-            margin: 0;
-            padding: 0;
-            background: #111;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            color: white;
-            text-align: center;
+        :root{--bg:#0f0f10;--accent:#e63946}
+        body{margin:0;background:var(--bg);color:#fff;font-family:Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;}
+        .center{min-height:100vh;display:flex;align-items:center;justify-content:center;flex-direction:column;padding:32px;text-align:center}
+        h1{font-size:2.5rem;margin:0 0 12px;opacity:0;animation:fadeIn 1.2s forwards}
+        @keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+
+        .static-heart{width:64px;height:64px;position:relative;margin:16px auto;transform:rotate(-45deg)}
+        .static-heart:before,.static-heart:after{content:'';position:absolute;width:64px;height:64px;background:var(--accent);border-radius:50%}
+        .static-heart{background:var(--accent)}
+        .static-heart:before{top:-32px;left:0}
+        .static-heart:after{left:32px;top:0}
+
+        button{background:var(--accent);color:#fff;border:0;padding:12px 22px;border-radius:10px;font-size:1.05rem;cursor:pointer;box-shadow:0 6px 20px rgba(0,0,0,0.4)}
+        button:active{transform:translateY(1px)}
+
+        /* floating hearts (replaces butterflies) */
+        .float-heart{
+            position:fixed;font-size:36px;line-height:1;pointer-events:none;opacity:0;transform:translateY(0) scale(0.7) rotate(0deg);
+            transition:opacity .3s ease;
+            will-change:transform,opacity;
+            text-shadow:0 6px 18px rgba(0,0,0,0.45);
         }
 
-        .center {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            flex-direction: column;
+        @keyframes floatUp{
+            0%{opacity:0;transform:translateY(0) scale(0.6) rotate(-10deg)}
+            10%{opacity:1}
+            100%{opacity:0;transform:translateY(-700px) scale(1.05) rotate(30deg)}
         }
 
-        h1 {
-            font-size: 2.5rem;
-            margin-bottom: 20px;
-            animation: fadeIn 2s ease forwards;
-            opacity: 0;
-        }
+        /* Page 2 */
+        #page2{display:none;padding:48px;max-width:900px;margin:0 auto;line-height:1.9;font-size:1.05rem}
+        #typedText{white-space:pre-wrap;font-size:1.05rem}
+        .word{opacity:0;display:inline-block;transform:translateY(6px);transition:opacity .45s cubic-bezier(.2,.9,.2,1),transform .45s cubic-bezier(.2,.9,.2,1);}
+        .word.show{opacity:1;transform:none}
 
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
-        .heart {
-            width: 60px;
-            height: 60px;
-            background: red;
-            position: relative;
-            margin: 20px auto;
-            transform: rotate(-45deg);
-            animation: heartbeat 1.3s infinite;
-        }
-
-        .heart::before,
-        .heart::after {
-            content: "";
-            width: 60px;
-            height: 60px;
-            background: red;
-            border-radius: 50%;
-            position: absolute;
-        }
-
-        .heart::before { top: -30px; left: 0; }
-        .heart::after { left: 30px; top: 0; }
-
-        @keyframes heartbeat {
-            0% { transform: scale(1) rotate(-45deg); }
-            50% { transform: scale(1.2) rotate(-45deg); }
-            100% { transform: scale(1) rotate(-45deg); }
-        }
-
-        button {
-            background: #e63946;
-            color: white;
-            border: none;
-            padding: 12px 25px;
-            font-size: 1.2rem;
-            border-radius: 8px;
-            cursor: pointer;
-            margin-top: 20px;
-            transition: 0.3s;
-        }
-
-        button:hover { background: #ff4d5a; }
-
-        /* Butterflies */
-        .butterfly {
-            position: fixed;
-            width: 40px;
-            height: 40px;
-            background-image: url('https://i.imgur.com/8yKQY2X.png');
-            background-size: contain;
-            opacity: 0;
-            animation: fly 5s linear forwards;
-        }
-
-        @keyframes fly {
-            0% { transform: translateY(0) scale(0.5); opacity: 0; }
-            20% { opacity: 1; }
-            100% { transform: translateY(-800px) scale(1); opacity: 0; }
-        }
-
-        /* Second Page */
-        #page2 {
-            display: none;
-            padding: 40px;
-            max-width: 800px;
-            margin: auto;
-            line-height: 1.8;
-            font-size: 1.2rem;
-        }
-
-        #typedText { white-space: pre-line; }
+        /* small responsive adjustments */
+        @media (max-width:520px){h1{font-size:1.8rem}.static-heart{width:48px;height:48px}.static-heart:before,.static-heart:after{width:48px;height:48px}} 
     </style>
 </head>
 <body>
 
 <div id="page1" class="center">
-    <h1>For you, my love</h1>
-    <div class="heart"></div>
-    <button onclick="startButterflies()">Press Me</button>
+    <h1 id="title">For you, my love</h1>
+    <div class="static-heart"></div>
+    <button id="pressBtn">Press Me</button>
 </div>
 
 <div id="page2">
-    <audio id="music" src="apocalypse.mp3"></audio>
+    <audio id="music" src="apocalypse.mp3" preload="auto"></audio>
     <p id="typedText"></p>
 </div>
 
 <script>
-    function startButterflies() {
-        for (let i = 0; i < 20; i++) {
-            const b = document.createElement('div');
-            b.classList.add('butterfly');
-            b.style.left = Math.random() * window.innerWidth + 'px';
-            b.style.top = (window.innerHeight - 50) + 'px';
-            document.body.appendChild(b);
-            setTimeout(() => b.remove(), 5000);
+    // Utility: random in range
+    function rand(min, max){return Math.random()*(max-min)+min}
+
+    // Replace butterflies with hearts that are crisp (text-based) and animate along a simple path
+    function spawnHearts(count){
+        for(let i=0;i<count;i++){
+            const s = document.createElement('div');
+            s.className = 'float-heart';
+            s.textContent = '❤'; // using a heart character for perfect crispness
+
+            // Random starting horizontal position
+            const startLeft = rand(5,95);
+            s.style.left = startLeft + 'vw';
+            // start off the bottom slightly
+            s.style.bottom = '-10vh';
+            // random size
+            const size = Math.floor(rand(24,52));
+            s.style.fontSize = size + 'px';
+
+            // assign a random animation duration and delay
+            const dur = rand(4.5,6.5);
+            const delay = rand(0,0.9);
+            s.style.animation = `floatUp ${dur}s linear ${delay}s forwards`;
+
+            // slight horizontal drift via JS keyframe animation for smoother natural motion
+            const drift = rand(-120,120);
+            const horiz = rand(-80,80);
+            s.animate([
+                { transform: `translateX(0) translateY(0) scale(0.8) rotate(${rand(-20,20)}deg)` },
+                { transform: `translateX(${horiz}px) translateY(-200px) scale(1) rotate(${rand(-10,30)}deg)` },
+                { transform: `translateX(${drift}px) translateY(-700px) scale(1.05) rotate(${rand(30,60)}deg)` }
+            ],{duration: (dur+delay)*1000, easing: 'linear', fill:'forwards'});
+
+            document.body.appendChild(s);
+
+            // remove after finished (duration + small buffer)
+            setTimeout(()=>{ s.remove(); }, (dur+delay)*1000 + 400);
         }
-        setTimeout(showPage2, 5500);
     }
 
-    function showPage2() {
-        document.getElementById('page1').style.display = 'none';
-        document.getElementById('page2').style.display = 'block';
-        typeMessage();
-        document.getElementById('music').play();
-    }
-
+    // Typing smoother: create spans for each word and reveal with CSS class for smooth fade & translate
     const message = `My princess, I can’t believe it’s been a whole year with you, a year of learning your heart, a year of falling deeper into you, a year of realising again and again that you’re the person I want to wake up to, lean on, laugh with, and love in all the quiet and loud ways life gives us. And yeah, I know we argue sometimes, we misunderstand each other, we get emotional, we get stubborn — but even those moments matter to me, because they remind me how much I want this, how much I want us.
 
 Sometimes I think about the moments I didn’t handle well, the times I could’ve been softer, more patient, more present, and it honestly gets to me because the last thing I ever want is to be the reason your heart feels heavy. I promise you I’m trying to grow, to be better for you, to show up in the ways you deserve — not out of pressure, but because losing even a piece of you is something I could never bear.
@@ -152,19 +111,54 @@ Being with you this past year has made my world fuller, calmer, sweeter, and mor
 
 Thank you for loving me the way you do, for giving me a year I’ll carry with me forever, and for being the person who makes my heart feel like home. Here’s to us, to everything we’ve built, and to everything still ahead.`;
 
-    let index = 0;
-    function typeMessage() {
-        const textContainer = document.getElementById('typedText');
-        const words = message.split(' ');
-        function showWord() {
-            if (index < words.length) {
-                textContainer.innerHTML += words[index] + ' ';
-                index++;
-                setTimeout(showWord, 300);
+    function typeMessage(minDelay=200, maxDelay=500){
+        const container = document.getElementById('typedText');
+        container.innerHTML = '';
+        const words = message.split(/(\s+)/); // keep whitespace tokens so spacing preserved
+        let i=0;
+        function showNext(){
+            if(i >= words.length) return;
+            const w = words[i];
+            if(/\s+/.test(w)){
+                // whitespace: append as-is (no animation)
+                container.appendChild(document.createTextNode(w));
+                i++; showNext();
+            } else {
+                const span = document.createElement('span');
+                span.className = 'word';
+                span.textContent = w;
+                container.appendChild(span);
+                // trigger reveal on next frame for smooth transition
+                requestAnimationFrame(()=>{ requestAnimationFrame(()=> span.classList.add('show')); });
+                i++;
+                const delay = rand(minDelay, maxDelay);
+                setTimeout(showNext, delay);
             }
         }
-        showWord();
+        showNext();
     }
+
+    // Button handler
+    document.getElementById('pressBtn').addEventListener('click', ()=>{
+        // spawn hearts for ~5s visual
+        spawnHearts(20);
+        // show page2 after hearts finish
+        setTimeout(()=>{
+            document.getElementById('page1').style.display='none';
+            document.getElementById('page2').style.display='block';
+            typeMessage(200,500);
+            // autoplay music if present and allowed by browser
+            const audio = document.getElementById('music');
+            if(audio){
+                // many browsers block autoplay without user interaction; this click counts so it should play
+                audio.currentTime = 0; audio.play().catch(()=>{/*ignore*/});
+            }
+        }, 5200);
+    });
+
+    // small accessibility: allow Enter key when focused on button
+    document.getElementById('pressBtn').addEventListener('keydown', (e)=>{ if(e.key==='Enter') e.target.click(); });
 </script>
+
 </body>
 </html>
