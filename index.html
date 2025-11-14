@@ -20,34 +20,21 @@
         button{background:var(--accent);color:#fff;border:0;padding:12px 22px;border-radius:10px;font-size:1.05rem;cursor:pointer;box-shadow:0 6px 20px rgba(0,0,0,0.4)}
         button:active{transform:translateY(1px)}
 
-        /* floating hearts (replaces butterflies) */
-        .float-heart{
-            position:fixed;font-size:36px;line-height:1;pointer-events:none;opacity:0;transform:translateY(0) scale(0.7) rotate(0deg);
-            transition:opacity .3s ease;
-            will-change:transform,opacity;
-            text-shadow:0 6px 18px rgba(0,0,0,0.45);
-        }
+        .float-heart{position:fixed;font-size:36px;line-height:1;pointer-events:none;opacity:0;transform:translateY(0) scale(0.7) rotate(0deg);transition:opacity .3s ease;will-change:transform,opacity;text-shadow:0 6px 18px rgba(0,0,0,0.45);}
+        @keyframes floatUp{0%{opacity:0;transform:translateY(0) scale(0.6) rotate(-10deg)}10%{opacity:1}100%{opacity:0;transform:translateY(-700px) scale(1.05) rotate(30deg)}}
 
-        @keyframes floatUp{
-            0%{opacity:0;transform:translateY(0) scale(0.6) rotate(-10deg)}
-            10%{opacity:1}
-            100%{opacity:0;transform:translateY(-700px) scale(1.05) rotate(30deg)}
-        }
-
-        /* Page 2 */
         #page2{display:none;padding:48px;max-width:900px;margin:0 auto;line-height:1.9;font-size:1.05rem}
         #typedText{white-space:pre-wrap;font-size:1.05rem}
         .word{opacity:0;display:inline-block;transform:translateY(6px);transition:opacity .45s cubic-bezier(.2,.9,.2,1),transform .45s cubic-bezier(.2,.9,.2,1);}
         .word.show{opacity:1;transform:none}
 
-        /* small responsive adjustments */
         @media (max-width:520px){h1{font-size:1.8rem}.static-heart{width:48px;height:48px}.static-heart:before,.static-heart:after{width:48px;height:48px}} 
     </style>
 </head>
 <body>
 
 <div id="page1" class="center">
-    <h1 id="title">For you, my love</h1>
+    <h1>For you, my love</h1>
     <div class="static-heart"></div>
     <button id="pressBtn">Press Me</button>
 </div>
@@ -58,106 +45,64 @@
 </div>
 
 <script>
-    // Utility: random in range
     function rand(min, max){return Math.random()*(max-min)+min}
 
-    // Replace butterflies with hearts that are crisp (text-based) and animate along a simple path
     function spawnHearts(count){
         for(let i=0;i<count;i++){
             const s = document.createElement('div');
             s.className = 'float-heart';
-            s.textContent = '❤'; // using a heart character for perfect crispness
-
-            // Random starting horizontal position
+            s.textContent = '❤';
             const startLeft = rand(5,95);
             s.style.left = startLeft + 'vw';
-            // start off the bottom slightly
             s.style.bottom = '-10vh';
-            // random size
             const size = Math.floor(rand(24,52));
             s.style.fontSize = size + 'px';
-
-            // assign a random animation duration and delay
             const dur = rand(4.5,6.5);
             const delay = rand(0,0.9);
-            s.style.animation = `floatUp ${dur}s linear ${delay}s forwards`;
-
-            // slight horizontal drift via JS keyframe animation for smoother natural motion
-            const drift = rand(-120,120);
-            const horiz = rand(-80,80);
             s.animate([
                 { transform: `translateX(0) translateY(0) scale(0.8) rotate(${rand(-20,20)}deg)` },
-                { transform: `translateX(${horiz}px) translateY(-200px) scale(1) rotate(${rand(-10,30)}deg)` },
-                { transform: `translateX(${drift}px) translateY(-700px) scale(1.05) rotate(${rand(30,60)}deg)` }
+                { transform: `translateX(${rand(-80,80)}px) translateY(-200px) scale(1) rotate(${rand(-10,30)}deg)` },
+                { transform: `translateX(${rand(-120,120)}px) translateY(-700px) scale(1.05) rotate(${rand(30,60)}deg)` }
             ],{duration: (dur+delay)*1000, easing: 'linear', fill:'forwards'});
-
             document.body.appendChild(s);
-
-            // remove after finished (duration + small buffer)
             setTimeout(()=>{ s.remove(); }, (dur+delay)*1000 + 400);
         }
     }
 
-    // Typing smoother: create spans for each word and reveal with CSS class for smooth fade & translate
-    const message = `My princess, I can’t believe it’s been a whole year with you, a year of learning your heart, a year of falling deeper into you, a year of realising again and again that you’re the person I want to wake up to, lean on, laugh with, and love in all the quiet and loud ways life gives us. And yeah, I know we argue sometimes, we misunderstand each other, we get emotional, we get stubborn — but even those moments matter to me, because they remind me how much I want this, how much I want us.
+    const message = `My princess, I can’t believe it’s been a whole year with you, a year of learning your heart, a year of falling deeper into you, a year of realising again and again that you’re the person I want to wake up to, lean on, laugh with, and love in all the quiet and loud ways life gives us. And yeah, I know we argue sometimes, we misunderstand each other, we get emotional, we get stubborn — but even those moments matter to me, because they remind me how much I want this, how much I want us.\n\nSometimes I think about the moments I didn’t handle well, the times I could’ve been softer, more patient, more present, and it honestly gets to me because the last thing I ever want is to be the reason your heart feels heavy. I promise you I’m trying to grow, to be better for you, to show up in the ways you deserve — not out of pressure, but because losing even a piece of you is something I could never bear.\n\nWhen I look back on everything we’ve shared — the soft moments, the messy ones, the late-night conversations, the tiny jokes only we understand — I feel this warmth in my chest that I can’t fully put into words. You’ve changed me, gently and beautifully, without asking me to be anything but myself. You’ve shown me what comfort feels like, what loyalty looks like, what love becomes when it’s patient, honest, and real.\n\nEven on the days that weren’t perfect, you stayed, you listened, you felt with me, and you made me feel chosen in a world that rushes past everything. I hope you know how deeply I appreciate you — your kindness, your honesty, your softness, the way you care so fiercely yet so gently.\n\nBeing with you this past year has made my world fuller, calmer, sweeter, and more certain. You’re my favourite part of every single day, and I love you more than I can ever explain. I only want you — in every version of this life, it’s still you.\n\nThank you for loving me the way you do, for giving me a year I’ll carry with me forever, and for being the person who makes my heart feel like home. Here’s to us, to everything we’ve built, and to everything still ahead.`;
 
-Sometimes I think about the moments I didn’t handle well, the times I could’ve been softer, more patient, more present, and it honestly gets to me because the last thing I ever want is to be the reason your heart feels heavy. I promise you I’m trying to grow, to be better for you, to show up in the ways you deserve — not out of pressure, but because losing even a piece of you is something I could never bear.
-
-When I look back on everything we’ve shared — the soft moments, the messy ones, the late-night conversations, the tiny jokes only we understand — I feel this warmth in my chest that I can’t fully put into words. You’ve changed me, gently and beautifully, without asking me to be anything but myself. You’ve shown me what comfort feels like, what loyalty looks like, what love becomes when it’s patient, honest, and real.
-
-Even on the days that weren’t perfect, you stayed, you listened, you felt with me, and you made me feel chosen in a world that rushes past everything. I hope you know how deeply I appreciate you — your kindness, your honesty, your softness, the way you care so fiercely yet so gently.
-
-Being with you this past year has made my world fuller, calmer, sweeter, and more certain. You’re my favourite part of every single day, and I love you more than I can ever explain. I only want you — in every version of this life, it’s still you.
-
-Thank you for loving me the way you do, for giving me a year I’ll carry with me forever, and for being the person who makes my heart feel like home. Here’s to us, to everything we’ve built, and to everything still ahead.`;
-
-    function typeMessage(minDelay=200, maxDelay=500){
+    function typeMessage(minDelay=150, maxDelay=400){
         const container = document.getElementById('typedText');
         container.innerHTML = '';
-        const words = message.split(/(\s+)/); // keep whitespace tokens so spacing preserved
+        const words = message.split(/(\s+)/);
         let i=0;
         function showNext(){
             if(i >= words.length) return;
             const w = words[i];
-            if(/\s+/.test(w)){
-                // whitespace: append as-is (no animation)
-                container.appendChild(document.createTextNode(w));
-                i++; showNext();
-            } else {
+            if(/\s+/.test(w)){ container.appendChild(document.createTextNode(w)); i++; showNext(); }
+            else {
                 const span = document.createElement('span');
                 span.className = 'word';
                 span.textContent = w;
                 container.appendChild(span);
-                // trigger reveal on next frame for smooth transition
                 requestAnimationFrame(()=>{ requestAnimationFrame(()=> span.classList.add('show')); });
                 i++;
-                const delay = rand(minDelay, maxDelay);
-                setTimeout(showNext, delay);
+                setTimeout(showNext, rand(minDelay,maxDelay));
             }
         }
         showNext();
     }
 
-    // Button handler
     document.getElementById('pressBtn').addEventListener('click', ()=>{
-        // spawn hearts for ~5s visual
         spawnHearts(20);
-        // show page2 after hearts finish
         setTimeout(()=>{
             document.getElementById('page1').style.display='none';
             document.getElementById('page2').style.display='block';
-            typeMessage(200,500);
-            // autoplay music if present and allowed by browser
+            typeMessage(150,400);
             const audio = document.getElementById('music');
-            if(audio){
-                // many browsers block autoplay without user interaction; this click counts so it should play
-                audio.currentTime = 0; audio.play().catch(()=>{/*ignore*/});
-            }
+            if(audio) audio.play().catch(()=>{});
         }, 5200);
     });
-
-    // small accessibility: allow Enter key when focused on button
-    document.getElementById('pressBtn').addEventListener('keydown', (e)=>{ if(e.key==='Enter') e.target.click(); });
 </script>
 
 </body>
