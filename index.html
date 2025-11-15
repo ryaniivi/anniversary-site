@@ -12,6 +12,7 @@ body{
     color:#fff;
     font-family:'Georgia', serif;
     font-weight:bold;
+    transition: background 2s ease;
 }
 .center{
     min-height:100vh;
@@ -112,6 +113,32 @@ img{width:100%;max-width:480px;border-radius:14px;margin-top:16px;box-shadow:0 4
     opacity:1;
     text-shadow: 0 0 12px rgba(255,192,203,0.9);
 }
+/* Final interactive heart */
+#finalHeartBtn{
+    margin-top:40px;
+    font-size:2rem;
+    padding:18px 30px;
+    border-radius:50%;
+    border:none;
+    background:var(--accent);
+    color:#fff;
+    cursor:pointer;
+    box-shadow:0 0 20px rgba(255,105,129,0.7);
+    animation:glow 1.5s infinite alternate;
+}
+@keyframes glow{
+    from {box-shadow:0 0 20px rgba(255,105,129,0.7);}
+    to {box-shadow:0 0 40px rgba(255,105,129,1);}
+}
+#finalMessage{
+    font-size:1.5rem;
+    margin-top:30px;
+    opacity:0;
+    transition: opacity 2s ease;
+    color:#ffb3e6;
+    line-height:1.6;
+    text-align:center;
+}
 </style>
 </head>
 <body>
@@ -166,6 +193,12 @@ img{width:100%;max-width:480px;border-radius:14px;margin-top:16px;box-shadow:0 4
             <p class="romanticText vow">I promise to never take you for granted, and always show my appreciation.</p>
             <p class="romanticText vow">And finally, I promise to always choose you, every single day.</p>
         </div>
+
+        <!-- Final interactive heart -->
+        <div class="section" id="finalSection" style="text-align:center; margin-top:50px;">
+            <button id="finalHeartBtn">Press me for your final surprise</button>
+            <p id="finalMessage">Thank you for loving me. Thank you for staying.<br>I want a lifetime with you.</p>
+        </div>
     </div>
 </div>
 
@@ -200,6 +233,7 @@ This year with you has made my world fuller, calmer, sweeter, and more certain. 
 
 Thank you for loving me the way you do, for giving me a year that will stay with me forever, and for being the person who feels like home to my heart. Here’s to us, to what we built, and to everything still ahead.`;
 
+// Typewriter effect
 function typeMessage(minDelay=70,maxDelay=150){
     const container=document.getElementById('typedText');
     container.innerHTML='';
@@ -278,6 +312,24 @@ document.getElementById('pressBtn').addEventListener('click',()=>{
         document.getElementById('page2').style.display='block';
         typeMessage(70,150);
     },5200);
+});
+
+// FINAL HEART CLICK
+document.getElementById('finalHeartBtn').addEventListener('click',()=>{
+    // Slow heart rain
+    const interval = setInterval(()=>spawnHearts(3), 300);
+
+    // brighten background
+    document.body.style.background = "#2a0f18";
+
+    // show final message
+    document.getElementById('finalMessage').style.opacity = 1;
+
+    // stop heart rain after 10s
+    setTimeout(()=>clearInterval(interval),10000);
+
+    // disable button after click
+    document.getElementById('finalHeartBtn').disabled = true;
 });
 </script>
 
