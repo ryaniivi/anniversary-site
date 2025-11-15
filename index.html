@@ -202,6 +202,9 @@ img{width:100%;max-width:480px;border-radius:14px;margin-top:16px;box-shadow:0 4
     </div>
 </div>
 
+<!-- MUSIC -->
+<audio id="music" src="apocalypse.mp3" preload="auto"></audio>
+
 <script>
 // Hearts animation
 function rand(min,max){return Math.random()*(max-min)+min;}
@@ -304,12 +307,30 @@ function startCountUp(){
     setInterval(updateCountUp,1000);
 }
 
-// BUTTON CLICK
-document.getElementById('pressBtn').addEventListener('click',()=>{
+// MUSIC
+const audio = document.getElementById('music');
+audio.volume = 0; // start muted
+
+// BUTTON CLICK - play music
+document.getElementById('pressBtn').addEventListener('click', () => {
     spawnHearts(20);
-    setTimeout(()=>{
-        document.getElementById('page1').style.display='none';
-        document.getElementById('page2').style.display='block';
+
+    // Fade in music
+    audio.currentTime = 0;
+    audio.play().catch(err => console.warn("Could not play audio:", err));
+    let vol = 0;
+    const fadeIn = setInterval(() => {
+        vol += 0.01;
+        if (vol >= 0.8) {
+            vol = 0.8;
+            clearInterval(fadeIn);
+        }
+        audio.volume = vol;
+    }, 100);
+
+    setTimeout(() => {
+        document.getElementById('page1').style.display = 'none';
+        document.getElementById('page2').style.display = 'block';
         typeMessage(70,150);
     },5200);
 });
