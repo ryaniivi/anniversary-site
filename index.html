@@ -78,6 +78,13 @@ button{
     font-size:1.15rem;
     line-height:1.7;
     margin-bottom:60px;
+    color:#ffb3e6;
+    text-shadow: 0 0 8px #ffb3e6;
+    animation:glowText 2s ease-in-out infinite alternate;
+}
+@keyframes glowText{
+    from {text-shadow: 0 0 8px #ffb3e6;}
+    to {text-shadow: 0 0 20px #ff6b81, 0 0 30px #ff6b81;}
 }
 .word{opacity:0;display:inline-block;transform:translateY(6px);transition:opacity .35s ease, transform .35s ease;}
 .word.show{opacity:1;transform:none;}
@@ -203,7 +210,7 @@ img{width:100%;max-width:480px;border-radius:14px;margin-top:16px;box-shadow:0 4
 </div>
 
 <!-- MUSIC -->
-<audio id="music" src="apocalypse.mp3.mp3" preload="auto"></audio>
+<audio id="music" src="apocalypse.mp3" preload="auto"></audio>
 
 <script>
 // Hearts animation
@@ -226,13 +233,15 @@ function spawnHearts(count){
 // Typed message
 const message=`My princess, I can’t believe it’s been a whole year with you, a year of learning your heart, a year of falling deeper into you, a year of realising again and again that you’re the person I want to wake up to, lean on, laugh with, and love in every quiet and loud moment we are given. And yes, I know we argue sometimes, we misunderstand each other, we get emotional, we get stubborn, but even those moments matter to me because they remind me how much I want this, how much I want us.
 
+There were nights recently where I genuinely felt awful about myself, nights where I’d lie there feeling this heavy ache in my chest because I kept thinking I broke you in ways you didn’t deserve. I don’t think I’ve ever cried the way I did on those nights. I’d just lie awake, replaying everything, unable to sleep for days because the thought of hurting you sits in me deeper than anything else. And I never want to be the reason your heart feels anything but safe and held.
+
 Sometimes I think about the moments I didn’t handle well, the times I could’ve been softer, more patient, more present, and it honestly gets to me because the last thing I ever want is to be the reason your heart feels heavy. I promise you I’m trying to grow, to be better for you, to show up in the ways you deserve, not out of pressure but out of love.
 
-When I look back on everything we’ve shared, the soft moments, the messy ones, the late night conversations, the tiny jokes only we understand, it fills me with a warmth I can’t fully explain. You’ve changed me in gentle, beautiful ways without ever asking me to be anything but myself. You’ve shown me comfort, loyalty, and a love that feels honest and real.
+When I look back on everything we’ve shared, the soft moments, the messy ones, the late-night conversations, the tiny jokes only we understand, it fills me with a warmth I can’t fully explain. You’ve changed me in gentle, beautiful ways without ever asking me to be anything but myself. You’ve shown me comfort, loyalty, and a love that feels honest and real.
 
 Even on the days that weren’t perfect, you stayed with me, you listened, you felt with me, and you made me feel chosen. I hope you know how deeply I appreciate your kindness, your honesty, your softness, the way your heart cares so fiercely yet so gently.
 
-This year with you has made my world fuller, calmer, sweeter, and more certain. You’re my favourite part of every day, and I love you more than I could ever put into words. I only want you, in every version of this life, it is still you.
+This year with you has made my world fuller, calmer, sweeter, and more certain. You’re my favourite part of every day, and I love you more than I could ever put into words. I only want you, always you, in every version of this life, in every future I can imagine.
 
 Thank you for loving me the way you do, for giving me a year that will stay with me forever, and for being the person who feels like home to my heart. Here’s to us, to what we built, and to everything still ahead.`;
 
@@ -278,9 +287,7 @@ function showMemorySections(){
 // Show vows one by one
 function showVows(){
     const vows=document.querySelectorAll('#vowSection .vow');
-    vows.forEach((v,i)=>{
-        setTimeout(()=>v.classList.add('visible'), i*1000);
-    });
+    vows.forEach((v,i)=>{setTimeout(()=>v.classList.add('visible'), i*1000);});
 }
 
 // COUNT-UP TIMER
