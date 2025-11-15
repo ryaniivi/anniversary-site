@@ -146,6 +146,16 @@ img{width:100%;max-width:480px;border-radius:14px;margin-top:16px;box-shadow:0 4
     line-height:1.6;
     text-align:center;
 }
+/* Fade-in for final images */
+.finalImages{
+    opacity:0;
+    transform:translateY(20px);
+    transition:opacity 1.5s ease, transform 1.5s ease;
+}
+.finalImages.visible{
+    opacity:1;
+    transform:translateY(0);
+}
 </style>
 </head>
 <body>
@@ -341,7 +351,19 @@ document.getElementById('pressBtn').addEventListener('click', () => {
 document.getElementById('finalHeartBtn').addEventListener('click',()=>{
     const interval = setInterval(()=>spawnHearts(3), 300);
     document.body.style.background = "#2a0f18";
-    document.getElementById('finalMessage').style.opacity = 1;
+    const finalMsg = document.getElementById('finalMessage');
+    finalMsg.style.opacity = 1;
+
+    // Add the 3 images below the final message with fade-in
+    const imgNames = ['cute.JPG','sharky.JPG','nerd.JPG'];
+    imgNames.forEach((name,i)=>{
+        const img = document.createElement('img');
+        img.src = name;
+        img.className = 'finalImages';
+        finalMsg.parentNode.appendChild(img);
+        setTimeout(()=>img.classList.add('visible'), i*500);
+    });
+
     setTimeout(()=>clearInterval(interval),10000);
     document.getElementById('finalHeartBtn').disabled = true;
 });
