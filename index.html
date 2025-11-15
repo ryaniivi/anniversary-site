@@ -36,11 +36,8 @@ h1{
     transform:rotate(-45deg);
 }
 .static-heart:before,.static-heart:after{
-    content:'';
-    position:absolute;
-    width:64px;height:64px;
-    background:var(--accent);
-    border-radius:50%;
+    content:'';position:absolute;width:64px;height:64px;
+    background:var(--accent);border-radius:50%;
 }
 .static-heart{background:var(--accent)}
 .static-heart:before{top:-32px;left:0}
@@ -105,6 +102,16 @@ img{width:100%;max-width:480px;border-radius:14px;margin-top:16px;box-shadow:0 4
     transition:opacity 1.5s ease;
 }
 #afterMessageImg.visible{opacity:1;}
+.vow{
+    opacity:0;
+    transition: opacity 1.5s ease, text-shadow 1.5s ease;
+    text-shadow: 0 0 6px rgba(255,192,203,0.5);
+    margin-top:12px;
+}
+.vow.visible{
+    opacity:1;
+    text-shadow: 0 0 12px rgba(255,192,203,0.9);
+}
 </style>
 </head>
 <body>
@@ -145,6 +152,14 @@ img{width:100%;max-width:480px;border-radius:14px;margin-top:16px;box-shadow:0 4
             <h2>A memory I'll never forget</h2>
             <img src="memory.jpg.jpeg" alt="Unforgettable memory" />
             <p class="romanticText">I'll forever and deeply cherish these, deep below my heart</p>
+        </div>
+
+        <!-- Personal Vow Section -->
+        <div class="section" id="vowSection">
+            <h2>My promises to you</h2>
+            <p class="romanticText vow">I promise to never let a day pass without making you feel loved.</p>
+            <p class="romanticText vow">I promise to be gentler with your heart.</p>
+            <p class="romanticText vow">I promise to be a man you feel safe growing with.</p>
         </div>
     </div>
 </div>
@@ -187,7 +202,6 @@ function typeMessage(minDelay=70,maxDelay=150){
     let i=0;
     function showNext(){
         if(i>=words.length){
-            // Show image after message
             const img=document.getElementById('afterMessageImg');
             img.classList.add('visible');
             showMemorySections();
@@ -216,6 +230,15 @@ function showMemorySections(){
     const sections=document.querySelectorAll('.section');
     sections.forEach((s,i)=>setTimeout(()=>s.classList.add('visible'),i*500));
     startCountUp();
+    setTimeout(showVows, sections.length*500 + 500);
+}
+
+// Show vows one by one
+function showVows(){
+    const vows=document.querySelectorAll('#vowSection .vow');
+    vows.forEach((v,i)=>{
+        setTimeout(()=>v.classList.add('visible'), i*1000);
+    });
 }
 
 // COUNT-UP TIMER
